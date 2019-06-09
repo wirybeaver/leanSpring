@@ -3,10 +3,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +50,7 @@ public class SimpleIOC {
                 else{
                     String refID = ele.getAttribute("ref");
                     if(refID==null || refID.isEmpty() ){
-                        throw new IllegalArgumentException("Property has no val or ref");
+                        throw new IllegalArgumentException("Property has no ref");
                     }
                     field.set(obj, getBean(refID));
                 }
