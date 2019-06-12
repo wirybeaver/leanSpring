@@ -11,7 +11,7 @@ public class PropertyValues {
     private final List<PropertyValue> propertyValueList = new ArrayList<>();
 
     public void addPropertyValue(PropertyValue pv) {
-        // 在这里可以对参数值 pv 做一些处理，如果直接使用 List，则就不行了
+        // TODO: 去重处理封装, 直接用List暴露给client使用就是面向过程
         this.propertyValueList.add(pv);
     }
 
