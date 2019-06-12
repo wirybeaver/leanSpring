@@ -11,7 +11,7 @@ public class BeanDefinition {
 
     private String beanClassName;
 
-    private PropertyValues propertyValues = new PropertyValues();
+    private PropertyValues propertyValues;
 
     public BeanDefinition() {
     }
