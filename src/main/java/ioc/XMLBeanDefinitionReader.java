@@ -39,9 +39,10 @@ public class XMLBeanDefinitionReader extends AbstractBeanDefinitionReader {
         String id = beanElement.getAttribute(idTag);
         String clazz = beanElement.getAttribute(classTag);
         BeanDefinition beanDefinition = new BeanDefinition();
+        beanDefinition.setId(id);
         beanDefinition.setBeanClassName(clazz);
         parseProperties(beanDefinition, beanElement);
-        registry.put(id, beanDefinition);
+        registry.add(beanDefinition);
     }
 
     private void parseProperties(BeanDefinition beanDefinition, Element beanElement){

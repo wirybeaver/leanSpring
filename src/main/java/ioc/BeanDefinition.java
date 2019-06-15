@@ -5,9 +5,11 @@ package ioc;
  */
 public class BeanDefinition {
 
+    private String ID;
+
     private Object bean;
 
-    private Class beanClass;
+    private Class<?> beanClass;
 
     private String beanClassName;
 
@@ -16,11 +18,19 @@ public class BeanDefinition {
     public BeanDefinition() {
     }
 
+    public String getID() {
+        return ID;
+    }
+
+    public void setId(String id) {
+        this.ID = id;
+    }
+
     public void setBean(Object bean) {
         this.bean = bean;
     }
 
-    public Class getBeanClass() {
+    public Class<?> getBeanClass() {
         return beanClass;
     }
 
