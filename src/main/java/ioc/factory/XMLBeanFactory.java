@@ -73,14 +73,15 @@ public class XMLBeanFactory implements BeanFactory {
     private Object createBean(BeanDefinition beanDefinition) throws Exception{
         Class<?> clazz = beanDefinition.getBeanClass();
         Object bean = clazz.getConstructor().newInstance();
+        if(bean instanceof BeanFactoryAware){
+            ((BeanFactoryAware) bean).setBeanFactory(this);
+        }
         applyPropertyValues(bean, beanDefinition);
         return bean;
     }
 
     private void applyPropertyValues(Object bean, BeanDefinition bd) throws Exception{
-        if(bean instanceof BeanFactoryAware){
-            ((BeanFactoryAware) bean).setBeanFactory(this);
-        }
+
         for(PropertyValue propertyValue : bd.getPropertyValues().getPropertyValues()){
             String name = propertyValue.getName();
             Object val = propertyValue.getValue();
