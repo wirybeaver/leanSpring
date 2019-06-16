@@ -17,6 +17,19 @@ public class XMLBeanFactory implements BeanFactory {
     // 增加beanDefinitionMap的并发性
     private List<String> beanDefinitionIDs = new ArrayList<>();
 
+    private XMLBeanDefinitionReader beanDefinitionReader;
+
+    public XMLBeanFactory(String location) throws Exception{
+        beanDefinitionReader = new XMLBeanDefinitionReader();
+        beanDefinitionReader.loadBeanDefinitions(location);
+        for(BeanDefinition bd : beanDefinitionReader.getRegistry()){
+            beanDefinitionIDs.add(bd.getID());
+            beanDefinitionMap.put(bd.getID(), bd);
+        }
+
+        registerBeanPostProcessors();
+    }
+
     @Override
     public Object getBean(String beanID) throws Exception {
         //
@@ -34,27 +47,6 @@ public class XMLBeanFactory implements BeanFactory {
         return bean;
     }
 
-    private Object initializeBean(Object bean, String beanID) throws Exception{
-        for(BeanPostProcessor beanPostProcessor : beanPostProcessors){
-            beanPostProcessor.postProcessBeforeInitialization(bean, beanID);
-        }
-        for(BeanPostProcessor beanPostProcessor : beanPostProcessors){
-            beanPostProcessor.postProcessAfterInitialization(bean, beanID);
-        }
-        return bean;
-    }
-
-    public XMLBeanFactory(String location) throws Exception{
-        XMLBeanDefinitionReader beanDefinitionReader = new XMLBeanDefinitionReader();
-        beanDefinitionReader.loadBeanDefinitions(location);
-        for(BeanDefinition bd : beanDefinitionReader.getRegistry()){
-            beanDefinitionIDs.add(bd.getID());
-            beanDefinitionMap.put(bd.getID(), bd);
-        }
-
-        registerBeanPostProcessors();
-    }
-
     private void registerBeanPostProcessors() throws Exception{
         // 保证顺序, 所以不能用keySet()
         for(String ID : beanDefinitionIDs){
@@ -68,7 +60,6 @@ public class XMLBeanFactory implements BeanFactory {
             }
         }
     }
-
 
     private Object createBean(BeanDefinition beanDefinition) throws Exception{
         Class<?> clazz = beanDefinition.getBeanClass();
@@ -100,6 +91,16 @@ public class XMLBeanFactory implements BeanFactory {
                 field.set(bean, val);
             }
         }
+    }
+
+    private Object initializeBean(Object bean, String beanID) throws Exception{
+        for(BeanPostProcessor beanPostProcessor : beanPostProcessors){
+            beanPostProcessor.postProcessBeforeInitialization(bean, beanID);
+        }
+        for(BeanPostProcessor beanPostProcessor : beanPostProcessors){
+            beanPostProcessor.postProcessAfterInitialization(bean, beanID);
+        }
+        return bean;
     }
 
 

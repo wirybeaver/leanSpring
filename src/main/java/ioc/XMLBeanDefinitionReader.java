@@ -5,8 +5,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.util.HashMap;
-import java.util.Map;
 
 public class XMLBeanDefinitionReader extends AbstractBeanDefinitionReader {
 
