@@ -47,6 +47,17 @@ public class XMLBeanFactory implements BeanFactory {
         return bean;
     }
 
+    public List<Object> getBeansForType(Class<?> clazz){
+        List<Object> beans = new ArrayList<>();
+        for(String ID : beanDefinitionIDs){
+            BeanDefinition bd = beanDefinitionMap.get(ID);
+            if(bd.getBeanClass().isAssignableFrom(clazz)){
+                beans.add(bd.getBean());
+            }
+        }
+        return beans;
+    }
+
     private void registerBeanPostProcessors() throws Exception{
         // 保证顺序, 所以不能用keySet()
         for(String ID : beanDefinitionIDs){
