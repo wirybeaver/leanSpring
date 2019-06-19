@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 /**
+ * todo: why final
  * @author Xuanyi Li
  */
 final public class JdkDynamicAopProxy extends AbstractAopProxy implements InvocationHandler {

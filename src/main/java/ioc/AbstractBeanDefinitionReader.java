@@ -1,12 +1,15 @@
 package ioc;
 
+import aop.AbstractAopProxy;
+
 import java.util.*;
 
 public abstract class AbstractBeanDefinitionReader implements BeanDefinitionReader{
 
-    protected final List<BeanDefinition> registry = new ArrayList<>();
+    protected BeanDefinitionRegistry registry;
 
-    public List<BeanDefinition> getRegistry() {
-        return registry;
+    public AbstractBeanDefinitionReader(BeanDefinitionRegistry registry){
+        this.registry = registry;
     }
+
 }

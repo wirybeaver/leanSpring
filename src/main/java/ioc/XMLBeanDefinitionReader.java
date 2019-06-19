@@ -16,6 +16,10 @@ public class XMLBeanDefinitionReader extends AbstractBeanDefinitionReader {
     private static final String idTag = "id";
     private static final String classTag = "class";
 
+    public XMLBeanDefinitionReader(BeanDefinitionRegistry beanDefinitionRegistry){
+        super(beanDefinitionRegistry);
+    }
+
     @Override
     public void loadBeanDefinitions(String location) throws Exception {
         Element root = DocumentBuilderFactory.newInstance()
@@ -40,7 +44,7 @@ public class XMLBeanDefinitionReader extends AbstractBeanDefinitionReader {
         beanDefinition.setId(id);
         beanDefinition.setBeanClassName(clazz);
         parseProperties(beanDefinition, beanElement);
-        registry.add(beanDefinition);
+        registry.registerBeanDefinition(beanDefinition);
     }
 
     private void parseProperties(BeanDefinition beanDefinition, Element beanElement){

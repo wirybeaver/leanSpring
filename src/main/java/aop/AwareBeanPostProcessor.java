@@ -1,9 +1,9 @@
 package aop;
 
 import ioc.BeanPostProcessor;
+import ioc.factory.AbstractBeanFactory;
 import ioc.factory.BeanFactory;
 import ioc.factory.BeanFactoryAware;
-import ioc.factory.XMLBeanFactory;
 import org.aopalliance.intercept.MethodInterceptor;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class AwareBeanPostProcessor implements BeanFactoryAware, BeanPostProcessor {
 
-    private XMLBeanFactory xmlBeanFactory;
+    private AbstractBeanFactory beanFactory;
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws Exception {
@@ -27,7 +27,7 @@ public class AwareBeanPostProcessor implements BeanFactoryAware, BeanPostProcess
             return bean;
         }
 
-        List<Object> aspects = xmlBeanFactory.getBeansForType(AspectJExpressionPointcutAdvisor.class);
+        List<Object> aspects = beanFactory.getBeansForType(AspectJExpressionPointcutAdvisor.class);
         for(Object obj : aspects){
             AspectJExpressionPointcutAdvisor aspect = (AspectJExpressionPointcutAdvisor) obj;
             if(aspect.getPointCut().getClassFilter().matches(bean.getClass())){
@@ -45,6 +45,6 @@ public class AwareBeanPostProcessor implements BeanFactoryAware, BeanPostProcess
 
     @Override
     public void setBeanFactory(BeanFactory beanFactory) throws Exception {
-        xmlBeanFactory = (XMLBeanFactory) beanFactory;
+        this.beanFactory = (AbstractBeanFactory) beanFactory;
     }
 }
