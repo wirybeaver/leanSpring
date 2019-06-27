@@ -1,8 +1,5 @@
 package ioc;
 
-/**
- * Created by code4wt on 17/8/3.
- */
 public class BeanDefinition {
 
     private String ID;
